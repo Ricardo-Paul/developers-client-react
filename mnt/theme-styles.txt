@@ -1,0 +1,62 @@
+
+----------------------------------------------------------------THEME
+To create a theme you need
+import createMuiTheme from '...'
+const theme = createMuiTheme({
+    palette: {
+        primary:{
+
+        },
+        secondary:{
+
+        }
+    }
+});
+
+
+To implement the theme you need MuiThemeProvider
+it has the theme as an argument...
+
+import MuiThemeProvider from '...'
+You wrap the app into it 
+
+<MuiThemeProvider theme={theme}>
+</MuiThemeProvider>
+
+
+
+-------------------------------------------------------------STYLES
+You import withStyles
+*** it has a styles as argument when exporting
+*** this give you access to the classes property inside the render
+
+const { classes } = this.props;
+
+const styles = {
+    card: {
+
+    }
+}
+
+export default withStyles(styles)(component)
+
+---------------------------------------------ACCESS THEME COLORS
+
+** move theme to single file
+** import it with curly braces // import { theme } from '...'
+
+** theme is an argument of styles
+(YOU WILL BE USING THEME TO ACCESS ANY COLOR)
+*********** theme.palette.primary.light
+*********** theme.palette.primary.dark
+
+** styles is object renderend inside parenthesis
+
+const styles = theme => ({
+    darkColor: {
+        
+    }
+})
+
+*** INSIDE STYLE YOU CREATE CLASSNAMES AND GIVE THEM PROPERTY 
+

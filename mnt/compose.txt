@@ -1,0 +1,20 @@
+** We use compose when we want to pass several store Enhancers to the store 
+const store = createStore( compose(storeEnhancers) )
+
+Store Enhancers: Higher order functions that add some extra functionality to the store 
+Higher order functions: functions that take functions as parameters and return functions as value
+
+applyMiddleware: is the only store Enhancer that comes shipped with redux
+
+const middleware = [thunk]
+const store = createStore( compose(applyMiddleware(...middleware)) )
+
+
+------------------------------------------------------------------------
+From the Redux docs:
+
+All compose does is let you write deeply nested function transformations without the rightward drift of the code. Don’t give it too much credit!
+
+func1(func2(func3(func4))))
+
+compose(func1, func2, func3, func4)

@@ -1,0 +1,61 @@
+- Form as a react component has state:
+if it's a login form:
+
+    - email,
+    - password
+
+    - loading (true when we just trigger the request function / false when we get a response)
+    axios.get('/login/{ value })
+        this.setState({loading: true})
+        .then(res => {
+            this.setState({loading: false})
+        })
+    - errors (we have sent an error object if error happens)
+
+
+
+--------------------- TextField ---> event.target.name
+*** Event target names are the same as the form state ( the values we want to set )
+
+<TextField name="email" />
+event.target.name = //email//
+
+
+
+handleChange(event){
+    this.setState({
+        [event.taget.name] : event.target.value OR
+        email: event.target.value //because email was the name of the field so (event.target.name is email)
+    })
+}
+
+while typing into the field we are storing its value 
+        onChange = {this.handleChange}
+
+        HANDLECHANGE----------------
+
+When the form is sent we should capture the entry to send to the server
+            value = {this.state.email}
+
+
+        HANDLESUBIT------------------
+        *** takes an event params to prevent default behavior
+        handleSubmit = (event) => {
+            event.preventDefault();
+        }
+
+        send the request using state properties
+
+        let devData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        axios.post('/login', devData)
+            .then( res =>{
+
+            })
+
+    IN THE CATCH BLOCK
+            ***** err
+            ***** error: err.response.data
+        

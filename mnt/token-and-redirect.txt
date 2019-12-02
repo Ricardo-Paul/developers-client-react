@@ -1,0 +1,55 @@
+We don't want the users to navigate through (login / signup) once they are logged in (while their token is not expired)
+
+** We need to get their token, decode it and see if it is expired
+import jwtDecode from 'jwt-decode'
+
+let token = localStorage.getItem('FBIdToken);
+let decodedToken = jwtDecode(token)
+
+if (decodedToken.exp * 1000 < Date.now() ){
+
+}
+
+** if it is expired we redirect to login
+window.location.href = '/login'
+
+** We need a variable to keep track of that
+
+
+let authenticated;
+if (decodedToken.exp * 1000 < Date.now() ){
+    authenticated = false;
+    window.location.href = '/login'
+} else {
+    authenticated = true;
+}
+
+----------------------------------------------------------------------
+** Don't forget we need to check if the user is authenticated when he clicks on login / signup
+So we are going to check those routes
+
+We have a functional component just for that
+const AuthRoute = () => {
+
+}
+
+
+** We will pass two props to AuthRoute , a component and the authenticated variable...
+** let's destructure the props
+
+const AuthRoute = ({ component: Component, authenticated, ...rest }) => ({
+
+})
+
+** AuthRoute has the route to authenticate 
+** Route has a render method to Redirect
+import { Route, Redirect} from 'react-router-dom'
+
+<Route 
+{...rest}
+render={ <Redirect to='/anyroute' /> } />
+
+
+** Render use a callback function that takes the props as argument to check if authenticated is true
+
+<render={ (props) => authenticated === true : <Redirect to='/' /> : <Component {props}/>}

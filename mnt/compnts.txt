@@ -1,0 +1,9 @@
+When we do this
+<Project project={project} />
+
+We add a prop in the project component
+So we in the prop component we can do
+
+Because this prop is an instance of project, we can destructure its field
+
+const { project: { title } } this.props

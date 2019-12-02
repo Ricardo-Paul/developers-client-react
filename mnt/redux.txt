@@ -1,0 +1,5 @@
+** createStore ARGUMENTS
+- reducers
+- preloadedState
+- enhancers (like applyMiddleware) 
+                * we use compose to add store enhancers
