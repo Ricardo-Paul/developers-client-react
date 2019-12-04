@@ -1,5 +1,84 @@
+ACTIONS EXPORTED AS NAMED COMPONENTS
+REDUCERS EXPORTED AS DEFAULT
+
+
 ** createStore ARGUMENTS
 - reducers
 - preloadedState
 - enhancers (like applyMiddleware) 
                 * we use compose to add store enhancers
+
+
+                after creating the store we need to give it to our app 
+                ** import the Provider and the store in App.js
+                import { Provider } from 'react-redux';
+                import store from '.../'
+
+
+                <Provider store={store}>
+                </Provider>
+
+-------------------------------------------- TIME TO CREATE ACTIONS
+FIRST USER ACTIONS (LOGIN / SIGNUP)
+
+-- We've been manipulating the loading variable in the handlesubmit function in login
+-- We're going to move this variable from local state to global state
+
+we move the whole axis call to a function called loginUser
+
+const loginUser
+
+** it will take the userData
+const loginUser = (userData)
+
+** we will need to dispatch the LOADING_UI type to set (loading) as global state, so we have dispatch as ARGUMENTS
+
+const loginUser = (userData) => (dispatch) =>{
+
+}
+
+
+-------------------------- coding userReducer 
+
+** a reducer takes an initial state and action
+** it will check each action type to modify the state accordingly
+NOTE: ( this is not the preloadedState of the store)
+
+* Remember we had an authenticated variable in App.js 
+that we set to false when the token is expired and true when it's not 
+
+* We will move this variable to global state
+* We manipulate it with two types: 
+SET_AUTHENTICATED
+SET_UNAUTHENTICATED
+
+const initialState = {
+    authenticated: false,
+}
+
+* Remember in the backend when we fetch a developer account details we returned an object
+const devAccountDetails = {}
+with arrays like 
+
+const devAccountDetails = {
+    contributors = [],
+    notifications = []
+}
+
+we will handle them in global state 
+
+const initialState = {
+    authenticated: false,
+    devAccountDetails: [],
+    contributors: [],
+    notifications: []
+}
+
+*** THE SET_USER ACTION WILL SEND ALL OF THESE DATA 
+
+SET_USER action has a payload which is the data
+
+dispatch({
+    type: SET_USER,
+    payload: res.data (devAccountDetails, contributors, notifications)
+})

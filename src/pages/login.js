@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+// redux stuff
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions';
 
 // IMAGE
 import Icon from '../images/dev.png'
@@ -38,7 +42,6 @@ export class login extends Component {
         this.state = {
             email: '',
             password: '',
-            loading: false,
             errors: {}
         }
     }
@@ -51,9 +54,6 @@ export class login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.setState({
-            loading: true
-        })
         const userData = {
             email: this.state.email,
             password: this.state.password
@@ -69,31 +69,20 @@ export class login extends Component {
                 console.log('email error:', this.state.errors)
             })
         }
-
-        axios.post('/login', userData )
-            .then(res =>{
-                this.setState({
-                    loading: false
-                })
-                console.log(res.data)
-                localStorage.setItem('FBIdToken', `Bearer ${res.data.loginToken}`);
-                this.props.history.push('/')
-            })
-            .catch(err => {
-                this.setState({
-                    errors: {
-                        general: 'Please verify your credentials'
-                    },
-                    loading: false
-                });
-                console.log(err.response.data)
-            })
+        this.props.loginUser(userData, this.props.history);
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps){
+            this.setState({
+                errors: nextProps.UI.errors
+            })
+        }
+    }
 
     render() {
-        const { classes } = this.props;
-        const { errors: {emailError, passwordError, general}, loading } = this.state;
+        const { classes, UI: { loading } } = this.props;
+        const { errors: {emailError, passwordError, general}  } = this.state;
         return (
             <div>
                 <Grid container className={classes.form}>
@@ -156,7 +145,19 @@ export class login extends Component {
 }
 
 login.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(login);
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+})
+
+const mapActionsToProps = {
+    loginUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
