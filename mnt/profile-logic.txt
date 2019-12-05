@@ -1,0 +1,53 @@
+After setting everything up ...
+
+We add the loading variable to the user initial state...
+** Before we get the data back we dispatch the LOADING_USER action type
+
+ dispatch({ type: LOADING_USER })  ===> loading: true
+    axios.get('/developer'){
+        dispatch({ type: SET_USER }) ===> loading: false
+    }
+
+* We use the loading variable to condition the ******** profileMarkUp
+
+let profileMarkUp = !loading ? (show) : (spinner);
+
+** Check if authenticated before showing profile 
+
+let profileMarkUp = !loading ? ( authenticated ? (show) : (redirect) ) : (spinner);
+
+
+MARKUP STYLE
+
+    -- The profileMarkUp is inside a <Paper />
+            -- a div for the profile <div className={classes.profile} >
+                    -- profile-image inside profile <div classeName="profile-img" >
+
+    -- profile details (second part of the paper)
+        ** we want the handle to be clickable
+        -- import MuiLink from '@materil-ui/core/Link'
+        -- import { Link } from 'react-router-dom'
+        <MuiLink component={Link} to=`developers/${handle}`> handle </MuiLink>
+
+
+------------------------------------------------------------------------------------
+# EXTRA details
+BIO - COMPANY - LOCATION - WEBSITE
+
+Those details may or may not exist
+** the format to display them (boolean)
+
+{ bio && {bio} }
+{ company && {company} }
+
+FOR LOCATION AND WEBSITE WE WILL USE ICON AND THE TEXT WILL BE IN A SPAN
+SO WE NEED <Fragment /> from react
+
+import React, { Component, Fragment } from 'react';
+
+{ location && (
+    <Fragment>
+        <Icon /> < span> {location} </span>
+    </Fragment>
+)}
+

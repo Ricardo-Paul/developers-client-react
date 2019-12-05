@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography';
 import Project from '../components/Project';
-
+import Profile from '../components/Profile'
 
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
@@ -38,7 +38,7 @@ export class home extends Component {
                        {projectsMarkup}
                    </Grid>
                    <Grid item sm={4} xs={12}>
-                       <p>PROFILE</p>
+                    <Profile />
                    </Grid>
                </Grid>
             </div>
