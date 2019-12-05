@@ -18,9 +18,9 @@ import { theme } from '../util/theme';
 // Icons
 import EmailIcon from '@material-ui/icons/Email'; //email
 
-import MoodIcon from '@material-ui/icons/Mood'; //bio
+
 import WorkIcon from '@material-ui/icons/Work'; //company
-import HttpIcon from '@material-ui/icons/Http'; //webiste
+import LanguageIcon from '@material-ui/icons/Language';
 import PersonPinIcon from '@material-ui/icons/PersonPin'; //location
 
 const styles = (theme) => ({
@@ -44,7 +44,8 @@ const styles = (theme) => ({
 			height: 200,
 			maxWidth: '100%',
 			objectFit: 'cover',
-			borderRadius: '50%'
+            borderRadius: '50%',
+            border: `solid 5px ${theme.palette.primary.main}`
 		},
 		'& .profile-details': {
 			textAlign: 'center',
@@ -62,7 +63,14 @@ const styles = (theme) => ({
 				'&:hover': {
 					cursor: 'pointer'
 				}
-			}
+            },
+            '& .bio-text': {
+                fontSize: 13,
+                fontFamily: 'monospace'
+            },
+            '& .company': {
+                fontSize: 10
+            }
 		}
 	}
 });
@@ -93,21 +101,28 @@ class Profile extends Component {
 							{' '}
 							{handle}{' '}
 						</MuiLink> <br/>
-                        {bio && <span>{bio}</span>} <br/>
+                        {bio && <span className="bio-text" >{bio}</span>} <br/> <br/>
 
                         { company && (
                             <Fragment>
-                                <WorkIcon color="primary"/> <span> {company} </span>
+                                <WorkIcon color="primary"/> <span> {company} <span className="company">company</span> </span>
                             </Fragment>
                         )} <br/>
 
                         { website && (
                             <Fragment>
-                                <HttpIcon color="primary"/> <span> {website} </span>
+                                <LanguageIcon color="primary"/>
+                                <a href={website} target="_blank" rel="noopener noreferrer" >
+                                  { website}
+                                </a>
                             </Fragment>
                         )} <br/>
 
-						{email && <Typography varaint="body2"> {email} </Typography>} <br/>
+                        { email && (
+                            <Fragment>
+                                <EmailIcon color="primary"/> <span> {email} </span>
+                            </Fragment>
+                        )} <br/>
 
 						{location && (
 							<Fragment>

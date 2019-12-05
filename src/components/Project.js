@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
@@ -11,6 +11,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Typography } from '@material-ui/core';
 
+// Icons
+import GitHubIcon from '@material-ui/icons/GitHub';
+
 import { theme } from '../util/theme';
 
 const styles = theme => ({
@@ -19,8 +22,13 @@ const styles = theme => ({
     },
     card:{
         display: 'flex',
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.primary.contrastText
+        color: theme.palette.primary.dark,
+        '& .gitLink': {
+            fontSize: 13
+        },
+        '& svg, a': {
+            verticalAlign: 'middle'
+        }
     },
     image: {
         minWidth: 200
@@ -50,11 +58,19 @@ class Project extends Component {
                     <CardMedia image={imageUrl} className={classes.image} />
 
                     <CardContent className={classes.content}>
-                        <Typography variant="h6" className={classes.darkColor} component={Link} to="/developers/${devHandle}" > {devHandle} </Typography>
-                        <Typography color="secondary"> {title} </Typography>
+                        <Typography variant="h5" color="primary" component={Link} to="/developers/${devHandle}" > {devHandle} </Typography>
+                        <Typography color="secondary"> {title} <span>(Project Title)</span> </Typography> <br/>
+
+                        <Typography variant="h6"> Overview </Typography>
                         <Typography> {overview} </Typography>
-                        <Typography color="textSecondary"> {createdAt} </Typography>
-                        <Typography variant="subtitle2" color="primary" component={Link} to="${gitLink}" > {gitLink} </Typography>
+                        <Fragment>
+                            <GitHubIcon color="primary"/> 
+                            <a href={gitLink} target="_blank" rel="noopener noreferrer" className="gitLink" >
+                               {"  "} {gitLink}
+                            </a>
+                        </Fragment> <br/>
+                        
+                        <Typography color="textSecondary" variant="caption" > {createdAt} </Typography>
                     </CardContent>
                 </Card>
             </div>

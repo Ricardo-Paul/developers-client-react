@@ -25,10 +25,12 @@ MARKUP STYLE
 
     -- profile details (second part of the paper)
         ** we want the handle to be clickable
+
         -- import MuiLink from '@materil-ui/core/Link'
         -- import { Link } from 'react-router-dom'
         <MuiLink component={Link} to=`developers/${handle}`> handle </MuiLink>
 
+    NB: Because the link lives inside the application
 
 ------------------------------------------------------------------------------------
 # EXTRA details
@@ -51,3 +53,4 @@ import React, { Component, Fragment } from 'react';
     </Fragment>
 )}
 
+STYLING
