@@ -1,0 +1,31 @@
+REMEMBER THIS in App.js ???
+** We need to get their token, decode it and see if it is expired
+import jwtDecode from 'jwt-decode'
+
+Also as long as the token is not expired we have to keep the user authenticated in the global state ( redux console )
+--- import { SET_AUTHENTICATED }   from '../'
+    if( !jwtDecode(token).exp * 1000 < Date.now()){
+        store.dispatch({ SET_AUTHENTICATED })
+    }
+
+And we need to keep the developer data that we fetched in the global state 
+
+---- import { setDeveloperData } from '../'
+    if( !jwtDecode(token).exp * 1000 < Date.now()){
+        store.dispatch(setDeveloperData())
+    }
+
+    *** inside the setDeveloperData function we hav SET_USER type that has a payload of the user data...
+    it will set the data to the global state.
+
+And we should keep the authorization header
+
+if(jwtDecode(token).exp * 1000 > Date.now()){
+    axios.defaults.headers.common['Authorization'] = token;
+}
+
+
+GET RID OF THE authenticated GLOBAL VARIABLE IN THE ROUTES
+
+import { SET_AUTHENTICATED } directly in the AuthRoute component
+* You will need to import connect to have access to the state
