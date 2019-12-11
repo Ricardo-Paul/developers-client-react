@@ -1,15 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import store  from '../redux/store'
+
+// component
+import EditDetails from './EditDetails';
 
 // redux stuff
 import { connect } from 'react-redux';
+import { uploadImage, logoutUser, getDeveloperData } from '../redux/actions/userActions';
 
 // MUI stuff
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 // styles
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
@@ -17,7 +25,7 @@ import { theme } from '../util/theme';
 
 // Icons
 import EmailIcon from '@material-ui/icons/Email'; //email
-
+import  AddPhotoIcon from '@material-ui/icons/AddAPhoto';
 
 import WorkIcon from '@material-ui/icons/Work'; //company
 import LanguageIcon from '@material-ui/icons/Language';
@@ -40,8 +48,8 @@ const styles = (theme) => ({
 			textAlign: 'center'
 		},
 		'& .profile-image': {
-			width: 200,
-			height: 200,
+			width: 150,
+			height: 150,
 			maxWidth: '100%',
 			objectFit: 'cover',
             borderRadius: '50%',
@@ -76,6 +84,24 @@ const styles = (theme) => ({
 });
 
 class Profile extends Component {
+
+	triggerInputButton = () => {
+		const inputButton = document.getElementById('image-input');
+		inputButton.click();
+	}
+
+	handleImageChange = (event) => {
+		const image = event.target.files[0];
+		const formData = new FormData();
+		formData.append('image', image, image.name);
+		this.props.uploadImage(formData);
+		axios.post('/developer/image', formData)
+	}
+
+	handleLogout = () => {
+		this.props.logoutUser()
+	}
+
 	render() {
 		const {
 			classes,
@@ -93,6 +119,12 @@ class Profile extends Component {
 					<div className="image-wrapper">
 						<img src={imageUrl} alt="profile image" className="profile-image" />
 					</div>
+					<input type="file" onChange={this.handleImageChange} id="image-input" hidden />
+					<Tooltip title="Edit picture" placement="right-end">
+						<IconButton onClick={this.triggerInputButton} >
+							<AddPhotoIcon color="primary" />
+						</IconButton>
+					</Tooltip>
 					<hr />
 
 					{/* profile details */}
@@ -101,13 +133,13 @@ class Profile extends Component {
 							{' '}
 							{handle}{' '}
 						</MuiLink> <br/>
-                        {bio && <span className="bio-text" >{bio}</span>} <br/> <br/>
+                        {bio && <span className="bio-text" >{bio}</span>} <hr />
 
                         { company && (
                             <Fragment>
                                 <WorkIcon color="primary"/> <span> {company} <span className="company">company</span> </span>
                             </Fragment>
-                        )} <br/>
+                        )} <hr />
 
                         { website && (
                             <Fragment>
@@ -116,19 +148,26 @@ class Profile extends Component {
                                   { website}
                                 </a>
                             </Fragment>
-                        )} <br/>
+                        )} <hr />
 
                         { email && (
                             <Fragment>
                                 <EmailIcon color="primary"/> <span> {email} </span>
                             </Fragment>
-                        )} <br/>
+                        )} <hr />
 
 						{location && (
 							<Fragment>
 								<PersonPinIcon color="primary" /> <span> {location} </span>
 							</Fragment>
 						)}
+						<Tooltip title="logout" placement="right-end" >
+							<IconButton onClick={this.handleLogout}>
+								<KeyboardReturn color="primary" />
+							</IconButton>
+						</Tooltip>
+
+						<EditDetails />
 					</div>
 				</div>
 			</Paper>
@@ -154,11 +193,18 @@ class Profile extends Component {
 
 Profile.propTypes = {
 	user: PropTypes.object.isRequired,
-	classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
+	uploadImage: PropTypes.func.isRequired,
+	logoutUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	user: state.user
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Profile));
+const mapActionsToProps = {
+	uploadImage,
+	logoutUser
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Profile));

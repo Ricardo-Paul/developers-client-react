@@ -1,0 +1,83 @@
+HOW DIALOG WORKS :
+
+ 1 - A button on top to open dialog ( triggering this button should set open to true)
+ state = {
+     open: false
+ }
+
+ // the dialog will need to have this state 
+ <Dialog open={this.state.open} onClose={this.handleClose} >
+
+handleOpen = () => {
+    this.setState({ open: true });
+}
+
+ <IconButton onClick={this.handleOpen} >
+    <EditIcon />
+ </IconButton>
+
+    ----- The handleOpen function
+    When the dialog is open, there should have the developer details (bio, website, location, company)
+    -- We create a function to do just that
+
+    mapDevCredentialsToState = (devCredentials) => {
+        const { devCredentials } = this.props;
+        this.setState({
+            bio : devCredentials.bio ? devCredentials.bio : '',
+            website : devCredentials.website ? devCredentials.website : '',
+            location : devCredentials.location ? devCredentials.location : '',
+            company : devCredentials.company ? devCredentials.company : ''
+        })
+    }
+
+and we call this function inside handleOpen
+handleOpen = () => {
+    this.setState({ open: true });
+    mapDevCredentialsToState(devCredentials);
+}
+
+
+
+
+THE DIALOG ( open value (true/false) and the onClose event )
+     onClose = {this.handleClose}
+
+<DialogTitle> Edit Details </DialogTitle>
+***** Now the dialog content will be a form with TextField s 
+***** the form doesn't have an onSubmit event because the DialogActions will handle that 
+
+<DialogContent>
+    <form>
+        <TextField
+            name="bio"
+            type="text"
+            label="Bio"
+            fullWidth
+            mutline
+            rows=3
+
+            onChange={this.handleChange}
+            value={this.state.bio}
+            />
+                        **** value and onChange **** are vital in a react TextField
+    </form>
+</DialogContent>
+
+        ******* Last the actions
+        ******* The actions hold the buttons 
+
+        *** handleSubmit won't take an event as param because we don't want to prevent default
+    handleSubmit = () => {
+        devCredentials = {
+            bio: this.state.bio,
+            website: this.state.website,
+            company: this.state.company,
+            location: this.state.location
+        } 
+    }
+
+        <DialogActions>
+            <Button onSubmit={this.handleSubmit}>
+                Save Change
+            </Button>
+        </DialogActions>

@@ -28,6 +28,11 @@ const styles = theme => ({
         },
         '& svg, a': {
             verticalAlign: 'middle'
+        },
+        '& .text-format': {
+            fontSize: 13,
+            fontFamily: 'monospace',
+            color: 'black'
         }
     },
     image: {
@@ -61,15 +66,14 @@ class Project extends Component {
                         <Typography variant="h5" color="primary" component={Link} to="/developers/${devHandle}" > {devHandle} </Typography>
                         <Typography color="secondary"> {title} <span>(Project Title)</span> </Typography> <br/>
 
-                        <Typography variant="h6"> Overview </Typography>
-                        <Typography> {overview} </Typography>
+                        <Typography > Overview </Typography>
+                        <span className="text-format"> {overview} </span>
                         <Fragment>
                             <GitHubIcon color="primary"/> 
                             <a href={gitLink} target="_blank" rel="noopener noreferrer" className="gitLink" >
                                {"  "} {gitLink}
                             </a>
                         </Fragment> <br/>
-                        
                         <Typography color="textSecondary" variant="caption" > {createdAt} </Typography>
                     </CardContent>
                 </Card>

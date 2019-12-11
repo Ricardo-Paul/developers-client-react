@@ -1,0 +1,34 @@
+
+EDITDETAILS
+The purpose is to update -- bio, website, location
+
+Problem 1
+    We need to get these values already in the field once we click on update
+
+    -So we need to get access to the devCredentials
+
+    mapStateToProps = (state) => {
+        devCredentials: state.user.devCredentials
+    }
+
+We have bio, webiste and location inside devCredentials
+-- We will set these values as the state of our component once it is mounted
+
+state = {
+    bio: '',
+    website: '',
+    location: '',
+    company: ''
+}
+
+componentDidMount(){
+    const { devCredentials } = this.props;
+    this.setState({
+        bio: devCredentials.bio,
+        webiste: devCredentials.webiste,
+        location: devCredentials.location
+    })
+}
+
+        PROBLEM SOLVED
+

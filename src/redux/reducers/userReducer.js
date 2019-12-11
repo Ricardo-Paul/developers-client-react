@@ -24,11 +24,13 @@ export default function(state = initialState, action){
                 authenticated: true,
                 loading: false
             };
+
         case LOADING_USER:
             return {
                 ...state,
                 laoding: true
             }
+
         default: 
          return state;
 }

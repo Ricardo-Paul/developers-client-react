@@ -1,0 +1,67 @@
+REVIEW ON IMAGE UPLOAD MECHANISM WITH BUSBOY (BACK END)
+
+    ***require*** Busby and create  New
+    -- New Busboy on takes an object with the request headers
+    -- const busboy = new Busboy({ headers: req.headers })
+
+    -- On busboy you appy on onFile, onFinish and end event
+
+    1 - busboy.on('file', ()=>{
+
+    })
+
+
+    2 - busboy.on('finish', ()=>{
+        // upload the image
+        // update user data 
+    })
+
+    3 - busboy.on(req.rawBody)
+
+    exports.imageUpload = (req, res) => {
+
+    }
+
+// Open files from the front-end 
+
+<input type='file' onChange={this.handleImageChange} hidden id="image-input" />
+ ** we hide the input button (ugly)
+
+ **WE WANT AN ICON THAT CAN BE CLICKED
+ <IconButton>
+ </IconButton>
+
+ ** And place our icon inside of it 
+ <IconButton>
+    <AddAPhotoIcon>
+    </AddAPhotoIcon>
+</IconButton>
+
+
+** WE STILL WANT TO TRIGGER THE INPUT BUTTON 
+** WE GET THE IconButton TO SELECT IT BY ID AND TRIGGER IT FOR US...
+
+<IconButton onClick={triggerInputButton}>
+</IconButton>
+
+triggerInputButton = () => {
+    const inputButton = document.querySelector('#image-input');
+    inputButton.click();
+}
+
+** NOW THAT WE TRIGGER THE INPUT BUTTON (HIDDEN)
+** IT TRIGGERS THE onChange={this.handleImageChange} METHOD
+
+handleImageChange = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image, image.name)
+    this.props.uploadImage(formData);
+}
+
+-- USE THE FormData class to create an object
+-- And appen the image to it 
+
+const formData = new FormData();
+
+formData.append('image', image, image.name)
