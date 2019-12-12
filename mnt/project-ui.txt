@@ -1,0 +1,9 @@
+    <Typography > Overview </Typography>
+    <span className="text-format"> {overview} </span>
+    <Fragment>
+        <GitHubIcon color="primary"/> 
+        <a href={gitLink} target="_blank" rel="noopener noreferrer" className="gitLink" >
+            {"  "} {gitLink}
+        </a>
+    </Fragment> <br/>
+    <Typography color="textSecondary" variant="caption" > {createdAt} </Typography>

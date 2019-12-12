@@ -2,6 +2,11 @@ import React, { Component, Fragment } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 
+
+// util
+import MyButton from '../util/MyButton';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+
 // react-router
 import { Link } from 'react-router-dom';
 
@@ -33,7 +38,8 @@ const styles = theme => ({
             fontSize: 13,
             fontFamily: 'monospace',
             color: 'black'
-        }
+        },
+        marginBottom: 15
     },
     image: {
         minWidth: 200
@@ -66,15 +72,12 @@ class Project extends Component {
                         <Typography variant="h5" color="primary" component={Link} to="/developers/${devHandle}" > {devHandle} </Typography>
                         <Typography color="secondary"> {title} <span>(Project Title)</span> </Typography> <br/>
 
-                        <Typography > Overview </Typography>
-                        <span className="text-format"> {overview} </span>
-                        <Fragment>
-                            <GitHubIcon color="primary"/> 
-                            <a href={gitLink} target="_blank" rel="noopener noreferrer" className="gitLink" >
-                               {"  "} {gitLink}
-                            </a>
-                        </Fragment> <br/>
-                        <Typography color="textSecondary" variant="caption" > {createdAt} </Typography>
+                        <MyButton tip="learn more">
+                            <UnfoldMoreIcon color="primary" />
+                        </MyButton>
+                        <MyButton tip="See on github">
+                            <GitHubIcon color="primary" />
+                        </MyButton>
                     </CardContent>
                 </Card>
             </div>
@@ -87,3 +90,4 @@ Project.propTypes = {
 }
 
 export default withStyles(styles)(Project);
+

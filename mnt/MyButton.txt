@@ -1,0 +1,75 @@
+Condition Navbar
+
+when authenticated
+don't show signup and login 
+
+LOGIN, HOME, BUTTON ARE FOR NOT authenticated USER
+
+
+Building a button sample as a component
+with 
+Tooltip and IconButton
+
+*** It's a default export so we will use the component's name to add props 
+<MyButton tip="Edit details" />
+
+*** this tip prop is actually a title for a Tooltip
+so we have destructured the tip 
+
+MyButton.js
+export default ({ tip }) => (
+
+)
+
+and assigned it as title for Tooltip
+export default({ tip }) => (
+    <Tooltip title={tip}>
+    <Tooltip />
+)
+
+So whatever we assign as tip for MyButton component:
+<MyButton tip="Edit developer details" />
+is actually a title for Tooltip 
+
+MyButton.js 
+export default ({ tip }) => (
+    <Tooltip title={tip}>
+    <Tooltip/>
+)
+//proudly edited with nano
+-------------------
+IconButton always take an onClick event
+<IconButton onClick={this.doAnyThing} />
+
+So we also need to destructure it as a prop and pass it to IconButton
+
+MyButton.js
+export default ({ tip, onClick }) => (
+    <Tooltip title={tip}>
+        <IconButton onClick={onClick}>
+        </IconButton>
+    </Tooltip>
+)
+
+** So whatever value we pass for onClick in MyButton component,
+this value will be an action for IconButton
+
+<MyButton tip="logout now" onClick={this.logOut}>
+<MyButton>
+
+
+---------------------------
+Inside IconButton we use to hava an Icon 
+<IconButton>
+    <EditIcon />
+</IconButton>
+
+This icon is destructured as a prop called children inside MyButton
+
+export default ({ children, tip, onClick }) => (
+    <Tooltip title={tip} >
+        <IconButton onClick={onClick}>
+            {children} //going to be an Icon
+        </IconButton>
+    <Tooltip />
+);
